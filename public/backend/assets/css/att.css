@@ -1,0 +1,10 @@
+img.img-avt {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+}
+
+img.att-img-point{
+    max-width: 300px;
+    cursor: pointer;
+}

@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Models\{{modelName}};
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
+
+class {{modelName}} extends BaseModel
+{
+    {{tables}}
+}

@@ -1,0 +1,59 @@
+@extends('erp.layouts.master')
+@section('meta')
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+@endsection
+@section('title') @lang('system.edit') @lang('{{modelNameSingularLowerCase}}.name') {{ $item->name }}@endsection
+@section('css')
+@endsection
+@section('js')
+@endsection
+@section('content')
+    <div class="container-fluid-width">
+        <div class="row page-titles">
+            <div class="col-xs-6 col-md-7 align-self-center pr-0">
+                <div class="d-flex flex-row-start">
+                    <h4 class="card-title">@lang('system.edit') @lang('{{modelNameSingularLowerCase}}.name') {{ $item->name }}</h4>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-5 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">@lang('system.dashboard')</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('app.{{modelNameSingularLowerCase}}.index')}}">@lang('system.manage') @lang('{{modelNameSingularLowerCase}}.name')</a></li>
+                    </ol>
+                    <a class="btn btn-secondary d-none d-lg-block m-l-15" href="{{route('app.{{modelNameSingularLowerCase}}.create')}}"><i class="fa fa-plus-circle"></i> @lang('system.create_new')</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form form-submit" method="POST" action="{{ route('app.{{modelNameSingularLowerCase}}.update', ['id' => $item->id]) }}">
+                <div id="main-content">
+                    <div class="left-form">
+                        <div class="card">
+                            <div class="card-body">
+
+                                @csrf
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-md-3 col-form-label">@lang('{{modelNameSingularLowerCase}}.name') <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <input class="form-control @haserror('name') is-invalid @endhaserror" type="text" id="{{modelNameSingularLowerCase}}-name" name="name" value="{{ old('name', $item->name) }}">
+                                        @error('name')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section id="form-footer" class="text-right">
+                    <div id="form-actions">
+                        <a href="{{ route('app.{{modelNameSingularLowerCase}}.index') }}" class="btn btn-secondary mr-1">@lang('system.cancel')</a>
+                        <input type="submit" class="btn btn-info" value="@lang('system.save')">
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+@endsection

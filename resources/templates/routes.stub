@@ -1,0 +1,13 @@
+<?php
+
+Route::group(['middleware' => [], 'prefix' => 'app'], function() {
+    Route::group(['prefix' => '{{modelNameSingularLowerCase}}'], function() {
+        Route::get('/', '{{modelName}}\{{modelName}}Controller@index')->name('app.{{modelNameSingularLowerCase}}.index');
+        Route::get('{id}/edit', '{{modelName}}\{{modelName}}Controller@edit')->name('app.{{modelNameSingularLowerCase}}.edit');
+        Route::get('{id}/delete', '{{modelName}}\{{modelName}}Controller@destroy')->name('app.{{modelNameSingularLowerCase}}.destroy');
+        Route::get('create', '{{modelName}}\{{modelName}}Controller@create')->name('app.{{modelNameSingularLowerCase}}.create');
+        Route::post('store', '{{modelName}}\{{modelName}}Controller@store')->name('app.{{modelNameSingularLowerCase}}.store');
+        Route::post('{id}', '{{modelName}}\{{modelName}}Controller@update')->name('app.{{modelNameSingularLowerCase}}.update')->where('id', '[0-9]+');
+        Route::post('/', '{{modelName}}\{{modelName}}Controller@options')->name('app.{{modelNameSingularLowerCase}}.options');
+    });
+});

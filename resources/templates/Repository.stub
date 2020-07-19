@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\{{ModelName}};
+
+class {{ModelName}}Repository
+{
+    public function getDataIndex()
+    {
+       return {{ModelName}}::whereNull('deleted_at')->get();
+    }
+
+    public function getDataCreate()
+    {
+       
+    }
+
+    public function updateOrCreate($data, $id = null) {
+        $data = {{ModelName}}::updateOrCreate(['id'=>$id,],$data);
+        if($data->id){
+            return true;
+        }
+        return false;
+    }
+
+    public function getDataEdit($id)
+    {
+        return {{ModelName}}::find($id);
+    }
+
+    public function destroy($id)
+    {
+        $delete = {{ModelName}}::find($id);
+        $delete->delete();
+        if($delete->trashed())
+        {
+            return true;
+        }
+        return false;
+    }
+}

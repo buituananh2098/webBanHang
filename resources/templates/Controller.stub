@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Http\Controllers\{{modelName}};
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Auth;
+use App\Repositories\{{modelName}}\{{modelName}}Repository;
+use App\Http\Requests\{{modelName}}\Store{{modelName}}Request;
+use App\Http\Requests\{{modelName}}\Update{{modelName}}Request;
+
+class {{modelName}}Controller extends Controller
+{
+    protected ${{modelNameSingularLowerCase}}Repository;
+
+    public function __construct({{modelName}}Repository ${{modelNameSingularLowerCase}}Repository)
+    {
+        $this->{{modelNameSingularLowerCase}}Repository = ${{modelNameSingularLowerCase}}Repository;
+    }
+
+    public function create()
+    {   
+        return view('erp.{{modelNameSingularLowerCase}}.create');
+    }
+
+    public function store(Store{{modelName}}Request $request)
+    {
+        $params = $request->except(['_token']);
+        $response = $this->{{modelNameSingularLowerCase}}Repository->save($params);
+        if ($response) {
+            return redirect()->route('app.{{modelNameSingularLowerCase}}.index')->with(['message' => __("messages.success")]);
+        }
+
+        return redirect()->route('app.{{modelNameSingularLowerCase}}.create')->with(['message' => __('messages.error'), 'type' => 'error']);
+    }
+
+    public function index(Request $request)
+    {
+        $items = $this->{{modelNameSingularLowerCase}}Repository->getItems($request);
+
+        return view('erp.{{modelNameSingularLowerCase}}.index', [
+            'items' => $items
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $item = $this->{{modelNameSingularLowerCase}}Repository->get{{modelName}}ById($id);
+        
+        return view('erp.{{modelNameSingularLowerCase}}.edit', [
+            'item' => $item
+        ]);
+    }
+
+    public function update($id, Update{{modelName}}Request $request)
+    {
+        $params = $request->except(['_token']);
+        $response = $this->{{modelNameSingularLowerCase}}Repository->save($params, $id);
+        if ($response) {
+            return redirect()->route('app.{{modelNameSingularLowerCase}}.index')->with(['message' => __("messages.success")]);
+        }
+
+        return redirect()->route('app.{{modelNameSingularLowerCase}}.edit', ['id' => $id])->with(['message' => __('messages.error'), 'type' => 'error']);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        if ($company = $this->{{modelNameSingularLowerCase}}Repository->destroy($id)) {
+            return redirect()->route('app.{{modelNameSingularLowerCase}}.index')->with(['message' => __("messages.delete_success")]);
+        }
+
+        return redirect()->route('app.{{modelNameSingularLowerCase}}.index')->with(['message' => __('messages.error'), 'type' => 'error']);
+    }
+
+    public function options(Request $request)
+    {
+        if ($request->option === 'delete' && $this->{{modelNameSingularLowerCase}}Repository->deleteByIds($request)) {
+            return redirect()->route('app.{{modelNameSingularLowerCase}}.index')->with(['message'=> __('messages.delete_success')]);
+        }
+
+        return redirect()->route('app.{{modelNameSingularLowerCase}}.index')->with(['message' => __('messages.error'), 'type' => 'error']);
+    }
+}

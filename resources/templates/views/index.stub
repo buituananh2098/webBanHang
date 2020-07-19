@@ -1,0 +1,149 @@
+@extends('erp.layouts.master')
+@section('meta')
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+@endsection
+@section('title') @lang('system.manage') @lang('{{modelNameSingularLowerCase}}.name') @endsection
+@section('css')
+@endsection
+@section('js')
+@endsection
+@section('content')
+    <div id="list-crud">
+        <div class="row page-titles">
+            <div class="col-xs-6 col-md-7 align-self-center pr-0">
+                <div class="d-flex flex-row-start">
+                    <h4 class="card-title">
+                        @lang('system.manage') @lang('{{modelNameSingularLowerCase}}.name')
+                    </h4>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-5 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">@lang('system.dashboard')</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('app.{{modelNameSingularLowerCase}}.index')}}">@lang('system.manage') @lang('{{modelNameSingularLowerCase}}.name')</a></li>
+                    </ol>
+                    <a class="btn btn-secondary d-none d-lg-block m-l-15" href="{{route('app.{{modelNameSingularLowerCase}}.create')}}"><i class="fa fa-plus-circle"></i> @lang('system.create_new')</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <form id="filter-crud" action="{{ route('app.{{modelNameSingularLowerCase}}.index') }}" method="GET">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-sm-12 col-md-8">
+                                                <div class="d-flex mb-2">
+                                                    <div class="mr-1">
+                                                        <label for="">@lang('system.show')</label>
+                                                        <select name="number_page" aria-controls="base-style" class="form-control input-sm">
+                                                            @foreach(config('system.NUMBER_PAGE_ARRAY') as $perPage)
+                                                                <option
+                                                                        value="{{$perPage}}"
+                                                                        @if(app('request')->input('number_page') == $perPage) selected @endif
+                                                                >{{$perPage}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                                <label for="">@lang('system.search')</label>
+                                                <div class="d-flex">
+                                                    <input name="key" type="search" class="form-control mr-1" placeholder="@lang('system.search') ..." value="{{app('request')->input('key')}}">
+                                                    <button type="submit" class="btn btn-secondary text-nowrap">@lang('system.search')</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <form id="form-list-crud" action="{{ route('app.{{modelNameSingularLowerCase}}.options') }}" method="POST">
+                                    @csrf
+                                    <table data-toggle="table" data-height="250" data-mobile-responsive="true" class="table table-bordered crud">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 12px;" class="check-all">
+                                                <input type="checkbox" class="check" id="checkAll">
+                                            </th>
+                                            <th style="width: 12px;">#</th>
+                                            <th>@lang('{{modelNameSingularLowerCase}}.name')</th>
+                                            <th>@lang('system.created_at')</th>
+                                            <th style="width: 120px;">@lang('system.operations')</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if(sizeof($items) > 0)
+                                            @foreach ($items as $item)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <input name="item[]" type="checkbox" value="{{$item->id}}" class="check checkItem">
+                                                    </td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->created_at }}</td>
+                                                    <td class="btn-option">
+                                                        <div class="btn-group">
+                                                            <a
+                                                                href="{{route('app.{{modelNameSingularLowerCase}}.edit', [$item->id])}}"
+                                                                class="btn btn-default-custom btn-show-lang text-left pl-2"
+                                                                title="@lang('system.edit')"
+                                                            >
+                                                                @lang('system.edit') <i class="ti-pencil"></i>
+                                                            </a>
+                                                            <span class="btn-translate btn btn-default-custom dropdown-toggle dropdown-toggle-split"
+                                                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                            >
+                                                                <span class="sr-only btn-default-custom">Toggle Dropdown</span>
+                                                            </span>
+                                                            <div class="dropdown-menu">
+                                                                <a
+                                                                    onclick="return  confirm('@lang('system.do_you_want_to')' +' '+ ' @lang('system.delete')')"
+                                                                    href="{{route('app.{{modelNameSingularLowerCase}}.destroy', [$item->id])}}"
+                                                                    class="text-left pl-2"
+                                                                    title="@lang('system.delete')"
+                                                                >
+                                                                    @lang('system.delete') <i class="ti-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9"><div class="alert alert-danger text-center">@lang('system.no_data_matching').</div></td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                    <div class="col-xs-12 col-sm-12 col-md-5">
+                                        <div class="form-inline">
+                                            <select id="option" name="option" class="form-control">
+                                                <option value="">@lang('system.option')</option>
+                                                @foreach(config('system.OPTIONS_ARRAY') as $k => $option)
+                                                    @if ($k == 'delete')
+                                                        <option value="{{$k}}">@lang('system.'.$k)</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <label class="lb-option my-1 ml-1 mr-2"><span class="mr-1">0</span> @lang('system.item')</label>
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+@endsection

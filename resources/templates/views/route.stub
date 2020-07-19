@@ -1,0 +1,10 @@
+<?php 
+
+Route::group(['prefix' => '{{ model }}'], function() {
+  Route::get('', '{{ ModelUp }}Controller@index')->name('admin.{{ model }}.index');
+  Route::get('create', '{{ ModelUp }}Controller@create')->name('admin.{{ model }}.create');
+  Route::post('store', '{{ ModelUp }}Controller@store')->name('admin.{{ model }}.store');
+  Route::get('edit/{id}', '{{ ModelUp }}Controller@edit')->name('admin.{{ model }}.edit');
+  Route::post('update/{id}', '{{ ModelUp }}Controller@update')->name('admin.{{ model }}.update');
+  Route::get('destroy/{id?}', '{{ ModelUp }}Controller@destroy')->name('admin.{{ model }}.destroy');
+});
