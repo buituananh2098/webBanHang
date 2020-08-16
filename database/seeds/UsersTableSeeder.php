@@ -29,6 +29,14 @@ class UsersTableSeeder extends Seeder
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
                 ],
+                [
+                    'email' => 'test@gmail.com',
+                    'username' => 'test',
+                    'password' => bcrypt('12345678'),
+                    'role' => 0,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
             ]
         );
     }
