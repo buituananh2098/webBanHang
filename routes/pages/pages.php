@@ -1,6 +1,6 @@
 <?php
 Route::get('/', 'FrontendController@index')->name('att.index');
-
+Route::get('/new-demo', 'FrontendController@index2')->name('index2');
 Route::get('dang-nhap', 'FrontendController@login')->name('att.page.login');
 Route::post('dang-nhap', 'FrontendController@loginPost')->name('att.login');
 Route::get('dang-xuat', 'FrontendController@logout')->name('att.logout');
@@ -18,7 +18,7 @@ Route::get('tt', 'FrontendController@test')->name('tt');
 
 Route::get('san-pham-moi', 'FrontendController@getNewProducts')->name('att.page.sanphammoi');
 Route::get('san-pham-ban-chay', 'FrontendController@getHotProducts')->name('att.page.sanphambanchay');
-Route::post('thanh-toan-momo','FrontendController@paymentMomo')->name('att.payment');
+Route::post('thanh-toan-momo', 'FrontendController@paymentMomo')->name('att.payment');
 
 Route::get('/blog/{slug?}/{id?}', 'BlogController@blogWithCate')->name('frontend.blog.blogWithCate');
 Route::get('search-blog', 'BlogController@blogWithTitle')->name('frontend.blog.blogWithTitle');

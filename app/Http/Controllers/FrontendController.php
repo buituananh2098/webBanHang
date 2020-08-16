@@ -74,6 +74,13 @@ class FrontendController extends Controller
         return response()->view('frontend.pages.trangchu', $this->data);
     }
 
+    public function index2(Request $request)
+    {
+        $this->data['categoryHighLight'] = $this->categoryRepository->getHighLight();
+        $this->data['banners'] = $this->bannerRepository->getBanner();
+        return view('frontend.new-demo.index2', $this->data);
+    }
+
     public function login()
     {
         return view('frontend.pages.user.login');
@@ -208,7 +215,7 @@ class FrontendController extends Controller
         $newProducts = $this->productRepository->getDataPaging();
         $this->data['headerCate'] = $this->categoryRepository->getParent();
         foreach ($newProducts as $product) {
-            $product->cost = current_price( $product->cost);
+            $product->cost = current_price($product->cost);
         }
         $this->data['Products'] = $newProducts;
 

@@ -24,7 +24,8 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    <input type="text" name="q" value="" id="search_input" title="Tìm kiếm sản phẩm" class="ty-search-block__input cm-hint" /><input type="hidden" name="dispatch" value="products.search"><input class="vs-flat-submit hidden-phone" type="submit" value="Tìm kiếm"><button title="Search" class="ty-search-magnifier hidden-tablet hidden-desktop vs-top-search-submit" type="submit"><i class="ty-icon-search"></i></button>
+                                    <input type="text" name="q" value="" id="search_input" title="Tìm kiếm sản phẩm" class="ty-search-block__input cm-hint" />
+                                    <input type="hidden" name="dispatch" value="products.search"><input class="vs-flat-submit hidden-phone" type="submit" value="Tìm kiếm"><button title="Search" class="ty-search-magnifier hidden-tablet hidden-desktop vs-top-search-submit" type="submit"><i class="ty-icon-search"></i></button>
                                 </form>
                             </div>
                         </div>
