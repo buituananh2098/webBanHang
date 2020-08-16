@@ -45,7 +45,7 @@
             "Tests\\": "tests/"
         },
         "files" : [
-            "App/Helper/libs.php"
+            "app/Helper/libs.php"
         ]
     },
     "minimum-stability": "dev",
