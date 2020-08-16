@@ -3,7 +3,6 @@
         <div class="span16 vs-full-width vs-home-mid-banners section-1">
             <div class="homepage-banners second-skin-banners ">
                 <div id="banner_slider_2176" class="banners owl-carousel">
-{{--                    {{dd($banner)}}--}}
                     @foreach($banner as $item)
                         <div class="item ty-banner__image-item">
                             <a class="banner-link banner__link" href="#">
